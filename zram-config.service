@@ -7,7 +7,7 @@ Before=reboot.target halt.target shutdown.target poweroff.target
 Type=simple
 TimeoutSec=300
 RemainAfterExit=yes
-ExecStart=/usr/local/share/zram-config/start.sh
+ExecStart=/usr/local/share/zram-config/start.bash
 ExecStop=/usr/local/sbin/zram-config "stop" "shutdown"
 
 [Install]
