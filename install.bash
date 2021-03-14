@@ -14,7 +14,7 @@ if [[ -f /usr/local/sbin/zram-config ]]; then
 fi
 
 echo "Installing needed packages (make, libattr1-dev)"
-if ! dpkg -s 'build-essential' 'libattr1-dev' &> /dev/null; then
+if ! dpkg -s 'build-essential' 'libattr1-dev' &>/dev/null; then
   apt-get install --yes build-essential libattr1-dev || exit 1
 fi
 
@@ -27,11 +27,12 @@ install -m 755 zram-config /usr/local/sbin/
 install -m 644 zram-config.service /etc/systemd/system/zram-config.service
 install -m 644 ztab /etc/ztab
 mkdir -p /usr/local/share/zram-config/log
+install -m 644 start.bash /usr/local/share/zram-config/start.bash
 install -m 644 uninstall.bash /usr/local/share/zram-config/uninstall.bash
 install -m 644 zram-config.logrotate /etc/logrotate.d/zram-config
 mkdir -p /usr/local/lib/zram-config/
 install -m 755 overlayfs-tools/overlay /usr/local/lib/zram-config/overlay
-echo "ReadWritePaths=/usr/local/share/zram-config/log" >> /lib/systemd/system/logrotate.service
+echo "ReadWritePaths=/usr/local/share/zram-config/log" >>/lib/systemd/system/logrotate.service
 
 echo "Starting zram-config.service"
 systemctl daemon-reload
